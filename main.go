@@ -4,6 +4,7 @@ import (
 	"net/http"
 	"github.com/gin-gonic/gin"
 	"strconv"
+	"github.com/gin-contrib/static"
 )
 
 var nextId int = 0
@@ -48,8 +49,9 @@ func DeleteTodo(c *gin.Context) {
 func main() {
 	todos = append(todos, Todo{Id: GetNextId(), Value: "CodeHouse", DueDate: "7/31/2021"})
 	r := gin.Default()
+	r.Use(static.Serve("/", static.LocalFile("./todo-vue/dist", false)))
 	r.GET("/api/todos", GetTodos)
 	r.POST("/api/todos", PostTodo)
 	r.DELETE("/api/todos/:id", DeleteTodo)
-	r.Run(":8090")
+	r.Run(":8091")
 }
