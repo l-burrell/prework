@@ -1,30 +1,21 @@
 <template>
   <div id="app">
-    <h1>To Do List</h1>
-    <table>
-      <thead>
-        <tr>
-          <th>Item</th>
-          <th>Due Date</th>
-        </tr>
-      </thead>
-      <tbody>
-        <tr v-for="todo in todos" :key="todo.id">
-          <td>{{ todo.value }}</td>
-          <td>{{ todo.due_date }}</td>
-        </tr>
-      </tbody>
-    </table>
+    <todo-list :todos="todos"/>
   </div>
 </template>
 
 <script>
+import TodoList from '@/components/TodoList.vue'
+
 const appData = {
   todos: []
 }
 
 export default {
   name: 'app',
+  components: {
+    TodoList
+  },
   data() {
     return appData;
   },
