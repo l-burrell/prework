@@ -1,17 +1,49 @@
 <template>
   <div id="app">
-    <img alt="Vue logo" src="./assets/logo.png">
-    <HelloWorld msg="Welcome to Your Vue.js App"/>
+    <h1>To Do List</h1>
+    <table>
+      <thead>
+        <tr>
+          <th>Item</th>
+          <th>Due Date</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr v-for="todo in todos" :key="todo.id">
+          <td>{{ todo.value }}</td>
+          <td>{{ todo.due_date }}</td>
+        </tr>
+      </tbody>
+    </table>
   </div>
 </template>
 
 <script>
-import HelloWorld from './components/HelloWorld.vue'
+const appData = {
+  todos: []
+}
 
 export default {
-  name: 'App',
-  components: {
-    HelloWorld
+  name: 'app',
+  data() {
+    return appData;
+  },
+  mounted: function() {
+    this.getTodos();
+  },
+  methods: {
+    getTodos: getTodos
+  }
+}
+
+async function getTodos() {
+  try {
+    const response = await fetch('api/todos')
+    const data = await response.json()
+    appData.todos = data.list
+  } 
+  catch (error) {
+    console.error(error)
   }
 }
 </script>
@@ -19,10 +51,6 @@ export default {
 <style>
 #app {
   font-family: Avenir, Helvetica, Arial, sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-  text-align: center;
-  color: #2c3e50;
   margin-top: 60px;
 }
 </style>
